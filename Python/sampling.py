@@ -6,6 +6,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 
+# Classification Library
+from sklearn.tree import DecisionTreeClassifier
+
+# Metrics
+from sklearn.metrics import confusion_matrix,classification_report,accuracy_score
+
 # Read credit card data file
 #df = pd.read_csv("processed.cleveland.data", sep=",")
 df = pd.read_csv("creditcard.csv", sep=",")
@@ -19,3 +25,15 @@ colors = ["#0101DF", "#DF0101"]
 
 sns.countplot('Class', data=df, palette=colors)
 plt.title('Class Distributions \n (0: No Fraud || 1: Fraud)', fontsize=14)
+
+# Stratified Sampling
+print("Stratified Sampling")
+y = df.pop('Class')
+X = df
+X_train, X_test, y_train, y_test = train_test_split( X, y, test_size=0.3, random_state=42, stratify=y)
+clf_tree=DecisionTreeClassifier()
+clf=clf_tree.fit(X_train,y_train)
+print("classification_report_tree",classification_report(y_test,clf_tree.predict(X_test)))
+
+score=accuracy_score(y_test,clf_tree.predict(X_test))
+print(score)
