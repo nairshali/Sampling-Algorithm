@@ -37,3 +37,17 @@ print("classification_report_tree",classification_report(y_test,clf_tree.predict
 
 score=accuracy_score(y_test,clf_tree.predict(X_test))
 print(score)
+
+# SMOTE Sampling
+print("Smote Sampling")
+
+from imblearn.over_sampling import SMOTE
+sm = SMOTE()
+X_train, y_train = sm.fit_sample(X_train, y_train)
+
+clf_tree=DecisionTreeClassifier()
+clf=clf_tree.fit(X_train,y_train)
+print("classification_report_tree",classification_report(y_test,clf_tree.predict(X_test)))
+
+score=accuracy_score(y_test,clf_tree.predict(X_test))
+print(score)
